@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,18 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+control = int(
+    input("[1] North  [2] South   [3] West  [4] East    [10] Quit\n"))
+player = Player("outside")
+
+while not control == 10:
+    if control == 1:
+        if player.currentRoom in ("outside", "foyer", "narrow"):
+            print(room["outside"].n_to["description"])
+            player.currentRoom = room['outside'].n_to
+            print(player.currentRoom)
+            print("something")
+
+    control = int(
+        input("[1] North  [2] South   [3] West  [4] East    [9] Quit\n"))
