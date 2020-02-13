@@ -53,15 +53,28 @@ room['treasure'].s_to = room['narrow']
 
 control = int(
     input("[1] North  [2] South   [3] West  [4] East    [10] Quit\n"))
-player = Player("outside")
+player = Player(input("What is your name? "), room["outside"])
 
-while not control == 10:
-    if control == 1:
-        if player.currentRoom in ("outside", "foyer", "narrow"):
-            print(room["outside"].n_to["description"])
-            player.currentRoom = room['outside'].n_to
-            print(player.currentRoom)
-            print("something")
+# while not control == 10:
+#     print(Player.current_room)
+#     if control == 1:
+#         if player.current_room in ("outside", "foyer", "narrow"):
+#             # print(room["outside"].n_to.name)
+#             print(room[player.current_room].n_to)
+#             player.current_room = room['outside'].n_to
+#             # print(player.current_room)
+#             print("something")
 
-    control = int(
-        input("[1] North  [2] South   [3] West  [4] East    [9] Quit\n"))
+#     control = int(
+#         input("[1] North  [2] South   [3] West  [4] East    [9] Quit\n"))
+print(player.current_room)
+while True:
+
+    cmd = input("-> ").lower()
+    if cmd in ["n", "s", "e", "w"]:
+        player.travel(cmd)
+    elif cmd == "q":
+        print("Goodbye!")
+        exit()
+    else:
+        print("I did not understand that command.")

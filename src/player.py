@@ -3,5 +3,13 @@
 
 
 class Player:
-    def __init__(self, currentRoom):
-        self.currentRoom = currentRoom
+    def __init__(self, name, current_room):
+        self.name = name
+        self.current_room = current_room
+
+    def travel(self, direction):
+        next_room = getattr(current_room, f"{direction}_to")
+        if next_room is not None:
+            player.current_room = next_room
+        else:
+            print("You cannot move in that directoin.")
