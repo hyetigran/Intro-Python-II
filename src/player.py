@@ -18,7 +18,14 @@ class Player:
 
     # * Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser
     def get_item(self, item):
-        return self.inventory.append(item)
+        room_items = self.current_room.items
+        for item in room_items:
+            if item.name == item:
+                self.inventory.append(item)
+                room_items.remove(item)
+                item.take()
+                return None
+        print(f'\nItem: {item} is not in {self.curren_room.name}\n')
 
     def drop_item(self, item):
         inventory = self.inventory
