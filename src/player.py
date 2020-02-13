@@ -3,22 +3,23 @@
 
 
 class Player:
-    def __init__(self, name, current_room, item):
+    def __init__(self, name, starting_room):
         self.name = name
-        self.current_room = current_room
-        self.items = [item]
+        self.current_room = starting_room
+        self.inventory = []
 
     def travel(self, direction):
-        next_room = getattr(current_room, f"{direction}_to")
+        next_room = getattr(self.current_room, f"{direction}_to")
         if next_room is not None:
-            player.current_room = next_room
+            self.current_room = next_room
+            print(self.current_room)
         else:
             print("You cannot move in that directoin.")
 
     # * Add `get [ITEM_NAME]` and `drop [ITEM_NAME]` commands to the parser
     def get_item(self, item):
-        return player.item.append(item)
+        return self.inventory.append(item)
 
     def drop_item(self, item):
-        items = player.items
-        return [i for i in items if i != item]
+        inventory = self.inventory
+        return [i for i in inventory if i != item]

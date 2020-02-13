@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -22,6 +22,19 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declare all items
+item = {
+    "coin": Item("coin", 0, 0),
+    "sword": Item("sword", 10, 0),
+    "shield": Item("shield", 5, 5),
+    "helm": Item("helm", 0, 10),
+}
+
+# Link items to room
+room['foyer'].items = [item["coin"]]
+room['overlook'].items = [item["sword"]]
+room['narrow'].items = [item["shield"]]
+room['treasure'].items = [item["helm"]]
 
 # Link rooms together
 
@@ -33,6 +46,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
 
 #
 # Main
@@ -51,28 +65,22 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-control = int(
-    input("[1] North  [2] South   [3] West  [4] East    [10] Quit\n"))
-player = Player(input("What is your name? "), room["outside"])
+player = Player(input("Enter your name: \n"), room["outside"])
 
-# while not control == 10:
-#     print(Player.current_room)
-#     if control == 1:
-#         if player.current_room in ("outside", "foyer", "narrow"):
-#             # print(room["outside"].n_to.name)
-#             print(room[player.current_room].n_to)
-#             player.current_room = room['outside'].n_to
-#             # print(player.current_room)
-#             print("something")
+print(f'Hello, {player.name}.')
 
-#     control = int(
-#         input("[1] North  [2] South   [3] West  [4] East    [9] Quit\n"))
 print(player.current_room)
 while True:
 
     cmd = input("-> ").lower()
     if cmd in ["n", "s", "e", "w"]:
         player.travel(cmd)
+    elif cmd == 't':
+        # print([item for item in room.items])
+        # for item in room.items:
+        #     print(f'Item: {item.name}')
+        # player.get_item()
+        print(*(item for item in room.items))
     elif cmd == "q":
         print("Goodbye!")
         exit()
