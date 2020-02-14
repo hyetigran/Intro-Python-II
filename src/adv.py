@@ -65,23 +65,23 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player = Player(input("Enter your name: \n"), room["outside"])
+player = Player("Hero", room["outside"])
 
 print(f'Hello, {player.name}.')
 
 print(player.current_room)
 while True:
 
-    cmd = input("-> ").lower()
-    if cmd in ["n", "s", "e", "w"]:
-        player.travel(cmd)
-    elif cmd == 't':
-        # print([item for item in room.items])
-        # for item in room.items:
-        #     print(f'Item: {item.name}')
-        # player.get_item()
-        print(*(item for item in room.items))
-    elif cmd == "q":
+    cmd = input("-> ").lower().split(" ")
+    if cmd[0] in ["n", "s", "e", "w"]:
+        player.travel(cmd[0])
+    elif cmd[0] == 'take' and len(cmd) > 1:
+        item = cmd[1]
+        player.get_item(item)
+    elif cmd[0] == 'drop' and len(cmd) > 1:
+        item = cmd[1]
+        player.drop_item(item)
+    elif cmd[0] == "q":
         print("Goodbye!")
         exit()
     else:
