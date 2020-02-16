@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -21,6 +22,19 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declare all items
+item = {
+    "coin": Item("coin", 0, 0),
+    "sword": Item("sword", 10, 0),
+    "shield": Item("shield", 5, 5),
+    "helm": Item("helm", 0, 10),
+}
+
+# Link items to room
+room['foyer'].items = [item["coin"]]
+room['overlook'].items = [item["sword"]]
+room['narrow'].items = [item["shield"]]
+room['treasure'].items = [item["helm"]]
 
 # Link rooms together
 
@@ -32,6 +46,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
 
 #
 # Main
@@ -49,3 +64,25 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player("Hero", room["outside"])
+
+print(f'Hello, {player.name}.')
+
+print(player.current_room)
+while True:
+
+    cmd = input("-> ").lower().split(" ")
+    if cmd[0] in ["n", "s", "e", "w"]:
+        player.travel(cmd[0])
+    elif cmd[0] == 'take' and len(cmd) > 1:
+        item = cmd[1]
+        player.get_item(item)
+    elif cmd[0] == 'drop' and len(cmd) > 1:
+        item = cmd[1]
+        player.drop_item(item)
+    elif cmd[0] == "q":
+        print("Goodbye!")
+        exit()
+    else:
+        print("I did not understand that command.")
